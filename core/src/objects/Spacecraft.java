@@ -1,8 +1,10 @@
 package objects;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.math.Vector2;
 
+import helpers.AssetManager;
 import utils.Settings;
 
 
@@ -70,6 +72,12 @@ public class Spacecraft extends Actor {
     // Posem l'Spacecraft al seu estat original
     public void goStraight() {
         direction = SPACECRAFT_STRAIGHT;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        batch.draw(AssetManager.spacecraft, position.x, position.y, width, height);
     }
 
 

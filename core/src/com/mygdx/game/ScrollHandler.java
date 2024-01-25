@@ -23,40 +23,40 @@ public class ScrollHandler extends Group {
 
     public ScrollHandler() {
 
-// Creem els dos fons
+        // Creem els dos fons
         bg = new Background(0, 0, Settings.GAME_WIDTH * 2, Settings.GAME_HEIGHT, Settings.BG_SPEED);
         bg_back = new Background(bg.getTailX(), 0, Settings.GAME_WIDTH * 2, Settings.GAME_HEIGHT, Settings.BG_SPEED);
 
-// Afegim els fons al grup
+        // Afegim els fons al grup
         addActor(bg);
         addActor(bg_back);
 
-// Creem l'objecte random
+        // Creem l'objecte random
         r = new Random();
 
-// Comencem amb 3 asteroides
+        // Comencem amb 3 asteroides
         numAsteroids = 3;
 
-// Creem l'ArrayList
+        // Creem l'ArrayList
         asteroids = new ArrayList<Asteroid>();
 
-// Definim una mida aleatòria entre el mínim i el màxim
+        // Definim una mida aleatòria entre el mínim i el màxim
         float newSize = Methods.randomFloat(Settings.MIN_ASTEROID, Settings.MAX_ASTEROID) * 34;
 
-// Afegim el primer asteroide a l'array i al grup
+        // Afegim el primer asteroide a l'array i al grup
         Asteroid asteroid = new Asteroid(Settings.GAME_WIDTH, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
         asteroids.add(asteroid);
         addActor(asteroid);
 
-// Des del segon fins l'últim asteroide
+        // Des del segon fins l'últim asteroide
         for (int i = 1; i < numAsteroids; i++) {
-// Creem la mida aleatòria
+            // Creem la mida aleatòria
             newSize = Methods.randomFloat(Settings.MIN_ASTEROID, Settings.MAX_ASTEROID) * 34;
-// Afegim l'asteroide
+            // Afegim l'asteroide
             asteroid = new Asteroid(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
-// Afegim l'asteroide a l'ArrayList
+            // Afegim l'asteroide a l'ArrayList
             asteroids.add(asteroid);
-// Afegim l'asteroide al grup d'actors
+            // Afegim l'asteroide al grup d'actors
             addActor(asteroid);
         }
 
@@ -65,7 +65,7 @@ public class ScrollHandler extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-// Si algun element es troba fora de la pantalla, fem un reset de l'element
+        // Si algun element es troba fora de la pantalla, fem un reset de l'element
         if (bg.isLeftOfScreen()) {
             bg.reset(bg_back.getTailX());
 

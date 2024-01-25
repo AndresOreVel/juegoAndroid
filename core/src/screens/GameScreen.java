@@ -14,6 +14,7 @@ import com.mygdx.game.ScrollHandler;
 
 import java.util.ArrayList;
 
+import helpers.AssetManager;
 import objects.Asteroid;
 import objects.Spacecraft;
 import utils.Settings;
@@ -42,11 +43,11 @@ public class GameScreen implements Screen {
     }
 
     private void drawElements() {
-        Gdx.gl20.glClearColor(0, 0, 0, 1);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl20.glClearColor(0, 0, 0, 1);
+        //Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         shapeRenderer.setColor(new Color(0,1,0,1));
         shapeRenderer.rect(spacecraft.getX(), spacecraft.getY(), spacecraft.getWidth(), spacecraft.getHeight());
@@ -98,7 +99,8 @@ public class GameScreen implements Screen {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
         stage.act(delta);
-        drawElements();
+        //drawElements();
+        AssetManager.music.play();
     }
 
     @Override
