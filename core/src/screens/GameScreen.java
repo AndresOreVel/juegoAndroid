@@ -4,22 +4,26 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.mygdx.game.ScrollHandler;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 
 import helpers.AssetManager;
+import com.mygdx.game.ScrollHandler;
+import helpers.InputHandler;
 import objects.Asteroid;
 import objects.Spacecraft;
 import utils.Settings;
 
 public class GameScreen implements Screen {
+    Boolean gameOver = false;
 
     private Stage stage;
     private Spacecraft spacecraft;
@@ -28,8 +32,12 @@ public class GameScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     // Per obtenir el batch de l'stage
     private Batch batch;
+    private float explosionTime = 0;
+
+
 
     public GameScreen() {
+        AssetManager.music.play();
         shapeRenderer = new ShapeRenderer();
         OrthographicCamera camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
         camera.setToOrtho(true);
@@ -40,6 +48,8 @@ public class GameScreen implements Screen {
         scrollHandler = new ScrollHandler();
         stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
+        spacecraft.setName("spacecraft");
+        Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
     private void drawElements() {
@@ -95,12 +105,26 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-       // Gdx.gl.glClearColor(1, 0, 0, 1);
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
         stage.act(delta);
-        //drawElements();
-        AssetManager.music.play();
+
+        if (!gameOver) {
+            if (scrollHandler.collides(spacecraft)) {
+                AssetManager.explosionSound.play();
+                stage.getRoot().findActor("spacecraft").remove();
+                gameOver = true;
+            }
+        } else {
+            batch.begin();
+            TextureRegion explosionFrame = (TextureRegion) AssetManager.explosionAnim.getKeyFrame(explosionTime, false);
+            batch.draw(explosionFrame, (spacecraft.getX() + spacecraft.getWidth() / 2) - 32, spacecraft.getY() + spacecraft.getHeight() / 2 - 32, 64, 64);
+            BitmapFont font = new BitmapFont(true);
+            font.draw(batch, "GameOver", 10, 10);
+            batch.end();
+
+            explosionTime += delta;
+        }
+
     }
 
     @Override

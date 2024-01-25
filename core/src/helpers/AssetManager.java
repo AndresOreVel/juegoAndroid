@@ -61,7 +61,7 @@ public class AssetManager {
         background.flip(false, true);
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
         music = Gdx.audio.newMusic(Gdx.files.internal("Afterburner.ogg"));
-        music.setVolume(0.2f);
+        music.setVolume(0.9f);
         music.setLooping(true);
     }
 

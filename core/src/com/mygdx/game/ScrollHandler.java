@@ -6,6 +6,7 @@ import java.util.Random;
 
 import objects.Asteroid;
 import objects.Background;
+import objects.Spacecraft;
 import utils.Methods;
 import utils.Settings;
 
@@ -60,6 +61,14 @@ public class ScrollHandler extends Group {
             addActor(asteroid);
         }
 
+    }
+    public boolean collides(Spacecraft nau){
+        for(Asteroid asteroid: asteroids){
+            if(asteroid.collides(nau)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
