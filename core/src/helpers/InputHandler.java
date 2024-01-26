@@ -1,4 +1,5 @@
 package helpers;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 import objects.Spacecraft;
@@ -18,12 +19,18 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if(keycode == Input.Keys.DOWN){
+            spacecraft.goDown();
+        }
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        if(keycode == Input.Keys.UP){
+            spacecraft.goUp();
+        }
+        return true;
     }
 
     @Override

@@ -123,6 +123,9 @@ public class GameScreen implements Screen {
             batch.end();
 
             explosionTime += delta;
+            if(Gdx.input.justTouched()){
+                restart();
+            }
         }
 
     }
@@ -150,6 +153,18 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void restart(){
+        gameOver = false;
+        explosionTime = 0;
+        spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX,Settings.SPACECRAFT_STARTY,Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT);
+        scrollHandler = new ScrollHandler();
+        stage.clear();
+        stage.addActor(scrollHandler);
+        stage.addActor(spacecraft);
+        spacecraft.setName("spacecraft");
+        Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
 }
